@@ -44,10 +44,10 @@ import static io.vertx.core.spi.metrics.Metrics.METRICS_ENABLED;
 /**
  * This class is optimised for performance when used on the same event loop that is was passed to the handler with.
  * However it can be used safely from other threads.
- *
+ * <p>
  * The internal state is protected by using the connection as a lock. If always used on the same event loop, then
  * we benefit from biased locking which makes the overhead of synchronized near zero.
- *
+ * <p>
  * It's important we don't have different locks for connection and request/response to avoid deadlock conditions
  *
  * @author <a href="http://tfox.org">Tim Fox</a>
@@ -92,7 +92,6 @@ public class HttpServerRequestImpl implements HttpServerRequest {
   }
 
   /**
-   *
    * @return
    */
   HttpRequest nettyRequest() {
@@ -426,6 +425,12 @@ public class HttpServerRequestImpl implements HttpServerRequest {
   }
 
   @Override
+  public ServerWebSocket upgrade(String websocketSubProtocols) {
+    conn.options.setWebsocketSubProtocols(websocketSubProtocols);
+    return upgrade();
+  }
+
+  @Override
   public HttpServerRequest setExpectMultipart(boolean expect) {
     synchronized (conn) {
       checkEnded();
@@ -576,7 +581,7 @@ public class HttpServerRequestImpl implements HttpServerRequest {
       resp.handleException(t);
     }
     if (upload instanceof NettyFileUpload) {
-      ((NettyFileUpload)upload).handleException(t);
+      ((NettyFileUpload) upload).handleException(t);
     }
     if (handler != null) {
       handler.handle(t);

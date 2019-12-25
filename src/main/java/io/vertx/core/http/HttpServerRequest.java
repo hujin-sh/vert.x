@@ -128,7 +128,7 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
   /**
    * Return the first header value with the specified name
    *
-   * @param headerName  the header name
+   * @param headerName the header name
    * @return the header value
    */
   @Nullable
@@ -137,7 +137,7 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
   /**
    * Return the first header value with the specified name
    *
-   * @param headerName  the header name
+   * @param headerName the header name
    * @return the header value
    */
   @GenIgnore(GenIgnore.PERMITTED_TYPE)
@@ -152,7 +152,7 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
   /**
    * Return the first param value with the specified name
    *
-   * @param paramName  the param name
+   * @param paramName the param name
    * @return the param value
    */
   @Nullable
@@ -173,7 +173,7 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
 
   /**
    * @return SSLSession associated with the underlying socket. Returns null if connection is
-   *         not SSL.
+   * not SSL.
    * @see javax.net.ssl.SSLSession
    */
   @GenIgnore(GenIgnore.PERMITTED_TYPE)
@@ -185,7 +185,7 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
    * access that method.
    *
    * @return an ordered array of the peer certificates. Returns null if connection is
-   *         not SSL.
+   * not SSL.
    * @throws javax.net.ssl.SSLPeerUnverifiedException SSL peer's identity has not been verified.
    * @see javax.net.ssl.SSLSession#getPeerCertificateChain()
    * @see #sslSession()
@@ -255,14 +255,14 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
    * Call this with true if you are expecting a multi-part body to be submitted in the request.
    * This must be called before the body of the request has been received
    *
-   * @param expect  true - if you are expecting a multi-part body
+   * @param expect true - if you are expecting a multi-part body
    * @return a reference to this, so the API can be used fluently
    */
   @Fluent
   HttpServerRequest setExpectMultipart(boolean expect);
 
   /**
-   * @return  true if we are expecting a multi-part body for this request. See {@link #setExpectMultipart}.
+   * @return true if we are expecting a multi-part body for this request. See {@link #setExpectMultipart}.
    */
   boolean isExpectMultipart();
 
@@ -291,7 +291,7 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
   /**
    * Return the first form attribute value with the specified name
    *
-   * @param attributeName  the attribute name
+   * @param attributeName the attribute name
    * @return the attribute value
    */
   @Nullable
@@ -308,6 +308,13 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
    *                               is sent
    */
   ServerWebSocket upgrade();
+
+  /**
+   * @param websocketSubProtocols
+   * @author Mr.Hu
+   * @date 2019-12-25
+   */
+  ServerWebSocket upgrade(String websocketSubProtocols);
 
   /**
    * Has the request ended? I.e. has the entire request, including the body been read?
@@ -335,14 +342,14 @@ public interface HttpServerRequest extends ReadStream<Buffer> {
    * @return the priority of the associated HTTP/2 stream for HTTP/2 otherwise {@code null}
    */
   default StreamPriority streamPriority() {
-      return null;
+    return null;
   }
 
   /**
    * Set an handler for stream priority changes
    * <p>
    * This is not implemented for HTTP/1.x.
-   * 
+   *
    * @param handler the handler to be called when stream priority changes
    */
   @Fluent

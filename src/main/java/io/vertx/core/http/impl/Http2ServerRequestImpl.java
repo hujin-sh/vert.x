@@ -502,6 +502,11 @@ public class Http2ServerRequestImpl extends VertxHttp2Stream<Http2ServerConnecti
   }
 
   @Override
+  public ServerWebSocket upgrade(String websocketSubProtocols) {
+    return upgrade();
+  }
+
+  @Override
   public boolean isEnded() {
     synchronized (conn) {
       return ended;
